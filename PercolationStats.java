@@ -51,6 +51,6 @@ public class PercolationStats {
     public static void main(String[] args) {
         int num = Integer.parseInt(args[0]);
         int trials = Integer.parseInt(args[1]);
-        PercolationStats percStats = new PercolationStats(num, trials);
+        new PercolationStats(num, trials);
     }
 }
