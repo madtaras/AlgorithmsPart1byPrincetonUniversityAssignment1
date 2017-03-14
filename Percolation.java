@@ -10,6 +10,14 @@ public class Percolation {
         weightedQuickUnionUFMatrix = new WeightedQuickUnionUF(n * n + 2);
         // matrix size is n + 1 for indeces to start from 1
         helpingMatrix = new boolean[n + 1][n + 1];
+        // create virtual top and virtual bottom
+        helpingMatrix[0][0] = true;
+        helpingMatrix[0][1] = true;
+        // connect virtual top and bottom to real ones
+        for (int i = 1; i < n + 1; i++) {
+            weightedQuickUnionUFMatrix.union(xyTo1D(1, i), xyTo1D(0, 0));
+            weightedQuickUnionUFMatrix.union(xyTo1D(n, i), xyTo1D(0, 1));
+        }
         for (int i = 1; i < n + 1; i++) {
             for (int j = 1; j < n + 1; j++) {
                 helpingMatrix[i][j] = false;
@@ -64,17 +72,12 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col) {
-        if (row == 1) {
+        if (row == 1 || row == size) {
             return helpingMatrix[row][col];
         }
 
-        for (int i = 1; i < size + 1; i++) {
-            if (weightedQuickUnionUFMatrix.connected(xyTo1D(1, i),
-                    xyTo1D(row, col))) {
-                return true;
-            }
-        }
-        return false;
+        return weightedQuickUnionUFMatrix.connected(xyTo1D(0, 0),
+                xyTo1D(row, col));
     }
 
     public int numberOfOpenSites() {
@@ -93,18 +96,18 @@ public class Percolation {
             return false;
         }
 
-        for (int i = 1; i < size + 1; i++) {
-            for (int j = 1; j < size + 1; j++) {
-                if (weightedQuickUnionUFMatrix.connected(xyTo1D(1, i),
-                        xyTo1D(size, j))) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return weightedQuickUnionUFMatrix.connected(xyTo1D(0, 0),
+                xyTo1D(0, 1));
     }
 
     private int xyTo1D(int row, int col) {
+        // condition for virtual top and bottom
+        if (row == 0 && col == 0) {
+            return size * size;
+        } else if (row == 0 && col == 1)  {
+            return size * size + 1;
+        }
+
         return size * (row - 1) + col - 1;
     }
 
