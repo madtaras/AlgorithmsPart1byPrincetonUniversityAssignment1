@@ -6,6 +6,10 @@ public class Percolation {
     private boolean[][] helpingMatrix;
 
     public Percolation(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException();
+        }
+
         size = n;
         weightedQuickUnionUFMatrix = new WeightedQuickUnionUF(n * n + 2);
         // matrix size is n + 1 for indeces to start from 1
@@ -28,7 +32,7 @@ public class Percolation {
     public void open(int row, int col) {
         // validate indices
         if (!validateIndices(row, col)) {
-            return;
+            throw new IndexOutOfBoundsException();
         }
 
         // don't perform actions if the site is opened, except first row sites
@@ -68,11 +72,19 @@ public class Percolation {
     }
 
     public boolean isOpen(int row, int col) {
+        if (!validateIndices(row, col)) {
+            throw new IndexOutOfBoundsException();
+        }
+
         return helpingMatrix[row][col];
     }
 
     public boolean isFull(int row, int col) {
-        if (row == 1 || row == size) {
+        if (!validateIndices(row, col)) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (row == 1) {
             return helpingMatrix[row][col];
         }
 
