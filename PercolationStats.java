@@ -26,10 +26,6 @@ public class PercolationStats {
             }
             numsOfSteps[i] = numOfSteps * 1.0 / (num * num);
         }
-        System.out.println("mean                    = " + Double.toString(this.mean()));
-        System.out.println("stddev                  = " + Double.toString(this.stddev()));
-        System.out.println("95% confidence interval = [" + Double.toString(this.confidenceLo()) +
-                ", " + Double.toString(this.confidenceHi()) + "]");
     }
 
     public double mean() {

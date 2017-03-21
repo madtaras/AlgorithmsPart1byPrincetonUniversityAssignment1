@@ -86,6 +86,9 @@ public class Percolation {
 
         if (row == 1) {
             return helpingMatrix[row][col];
+        } else if (row == size) {
+            return helpingMatrix[row][col] && weightedQuickUnionUFMatrix.connected(xyTo1D(0, 0),
+                    xyTo1D(row, col - 1));
         }
 
         return weightedQuickUnionUFMatrix.connected(xyTo1D(0, 0),
