@@ -15,7 +15,7 @@ public class PercolationStats {
         trials = t;
 
         int numOfSteps;
-        numsOfSteps = new double[num];
+        numsOfSteps = new double[trials];
         Percolation perc;
         for (int i = 0; i < trials; i++) {
             perc = new Percolation(num);
